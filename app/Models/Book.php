@@ -12,6 +12,21 @@ class Book extends Model
     protected $table = 'books';
 
     protected $fillable = [
-        'title', 'file'
+        'title', 'file', 'image'
     ];
+
+    public function agent()
+    {
+        return $this->belongsTo(Agent::class);
+    }
+
+    public function code()
+    {
+        return $this->belongsTo(BookCode::class);
+    }
+
+    public function downloadedBook()
+    {
+        return $this->belongsTo(DownloadedBook::class);
+    }
 }

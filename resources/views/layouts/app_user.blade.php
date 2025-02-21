@@ -21,23 +21,29 @@
                 document.getElementById("captchaText").setAttribute("data-captcha", captcha);
             }
 
-            function validateCode() {
-                const validCode = "12345";
-                const inputCode = document.getElementById("codeInput").value;
+            function validateCode(event) {
+                event.preventDefault();
+
                 const captchaInput = document.getElementById("captchaInput").value;
                 const captchaCorrect = document.getElementById("captchaText").getAttribute("data-captcha");
+                const resultMessage = document.getElementById("resultMessage");
+                const submitButton = document.getElementById("submitButton");
                 
-                if (inputCode !== validCode) {
-                    alert("Please insert the valid code");
-                    return;
-                }
-                if (captchaInput !== captchaCorrect) {
-                    alert("Captcha salah, coba lagi");
+                if (captchaInput === "") {
+                    resultMessage.innerText = "Please enter the captcha";
+                    resultMessage.style.color = "orange";
+                    submitButton.disabled = true;  
+                } else if (captchaInput !== captchaCorrect) {
+                    resultMessage.innerText = "Sorry, you input the wrong captcha";
+                    resultMessage.style.color = "red";
+                    submitButton.disabled = true;
                     generateCaptcha();
-                    return;
+                } else {
+                    resultMessage.innerText = "Good Job!  Click the button to get the e-book";
+                    resultMessage.style.color = "green";
+                    submitButton.disabled = false;
                 }
                 
-                document.getElementById("downloadSection").style.display = "block";
             }
             
             window.onload = generateCaptcha;
